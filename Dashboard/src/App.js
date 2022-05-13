@@ -8,7 +8,7 @@ import contractAbi, {contractAddress} from './contractabi'
 import WalletConnectProvider from "@walletconnect/web3-provider";
 
 function App() {
-  const [account, setAccount] = useState("Metamask")
+  const [account, setAccount] = useState("Connect")
   const [connectWallet, setConnectWallet] = useState("WalletConnect")
   const [claimrewards, setClaimRewards] = useState('0')
   const [showrewards, setShowRewards] = useState('0')
@@ -223,7 +223,7 @@ function App() {
             {show ?
               <div >
                 {showmeta && <button onClick={loadWeb3} className="btn mt-3  mt-md-0 text-truncate mar border border-left-4 btn-light fw-bolder btnWidth   p-2 fs-5">{account}</button>}
-                {showwallet && <button onClick={walletconnect} className="btn  mt-3  mt-md-0 marginLeft1  text-truncate btn-light fw-bolder btnWidth   p-2 fs-5">{connectWallet}</button>}
+                {/*showwallet && <button onClick={walletconnect} className="btn  mt-3  mt-md-0 marginLeft1  text-truncate btn-light fw-bolder btnWidth   p-2 fs-5">{connectWallet}</button>*/}
               </div>
               :
               <div>
@@ -281,7 +281,7 @@ function App() {
           </div>
           <div className=" mt-5 logoMaindiv2 pb-2 d-flex justify-content-center align-items-center">
             <img src={ScareCRO_ico} alt="logo" />
-            <a href="https://https://t.me/ScareCROcoin"><i class="fab fs-3 marginLeft fa-telegram-plane"></i></a>
+            <a href="https://t.me/ScareCROcoin"><i class="fab fs-3 marginLeft fa-telegram-plane"></i></a>
             <a href="https://twitter.com/ScareCROcoin"><i class="fab fs-3 marginLeft fa-twitter"></i></a>
           </div>
         </div>
