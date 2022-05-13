@@ -9,13 +9,13 @@ import WalletConnectProvider from "@walletconnect/web3-provider";
 
 function App() {
   const [account, setAccount] = useState("Connect")
-  const [connectWallet, setConnectWallet] = useState("WalletConnect")
+  /*const [connectWallet, setConnectWallet] = useState("WalletConnect")*/
   const [claimrewards, setClaimRewards] = useState('0')
   const [showrewards, setShowRewards] = useState('0')
   const [balance, setBalance] = useState("0");
   const [show, setShow] = useState()
   const [showmeta, setShowMeta] = useState(true);
-  const [showwallet, setShowWallet] = useState(true);
+  /*const [showwallet, setShowWallet] = useState(true);*/
   console.log(account);
   let contractabi = contractAbi;
   let accountAd;
@@ -24,7 +24,7 @@ function App() {
 
  /* eslint-disable no-unused-vars */
   const loadWeb3 = async () => {
-    setShowWallet(false)
+    /*setShowWallet(false)*/
     let isConnected = false;
     try {
       if (window.ethereum) {
@@ -156,7 +156,7 @@ function App() {
           console.log("(accounts[0], 2)", (accounts))
 
           setAccount(accounts[0])
-          setConnectWallet(accounts[0]);
+          /*setConnectWallet(accounts[0]);*/
           accountAd = accounts[0];
           getData();
         switch (netId) {
