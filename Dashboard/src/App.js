@@ -6,8 +6,9 @@ import ScareCRO_ico from './Images/ScareCRO_ico.png'
 import ScareCRO_side from './Images/ScareCRO_side.png'
 import contractAbi, {contractAddress} from './contractabi'
 import WalletConnectProvider from "@walletconnect/web3-provider";
-import * as config from "../src/config.ts";
+import * as config from "./config.js";
 import { ethers } from "ethers";
+
 
 
 function App() {
