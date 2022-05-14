@@ -6,16 +6,19 @@ import ScareCRO_ico from './Images/ScareCRO_ico.png'
 import ScareCRO_side from './Images/ScareCRO_side.png'
 import contractAbi, {contractAddress} from './contractabi'
 import WalletConnectProvider from "@walletconnect/web3-provider";
+import * as config from "../src/config.ts";
+import { ethers } from "ethers";
+
 
 function App() {
   const [account, setAccount] = useState("Connect")
-  /*const [connectWallet, setConnectWallet] = useState("WalletConnect")*/
+  const [connectWallet, setConnectWallet] = useState("WalletConnect")
   const [claimrewards, setClaimRewards] = useState('0')
   const [showrewards, setShowRewards] = useState('0')
   const [balance, setBalance] = useState("0");
   const [show, setShow] = useState()
   const [showmeta, setShowMeta] = useState(true);
-  /*const [showwallet, setShowWallet] = useState(true);*/
+  const [showwallet, setShowWallet] = useState(true);
   console.log(account);
   let contractabi = contractAbi;
   let accountAd;
@@ -24,7 +27,7 @@ function App() {
 
  /* eslint-disable no-unused-vars */
   const loadWeb3 = async () => {
-    /*setShowWallet(false)*/
+    setShowWallet(false)
     let isConnected = false;
     try {
       if (window.ethereum) {
@@ -122,14 +125,23 @@ function App() {
     setShowMeta(false)
     let isConnected = false;
     try {
-      // setErrorState(false);
-      console.log("This is   setErrorState(false);");
-      const provider = new WalletConnectProvider({
-        infuraId: "6d2b77cc1e1d45a7a12b25035aa39ce2",
-      });
-
+      // Reset cache
+    localStorage.clear();
+    const provider = new WalletConnectProvider({
+      rpc: {
+        [config.configVars.rpcNetwork.chainId]:
+          config.configVars.rpcNetwork.rpcUrl,
+      },
+      // This chainId parameter is not mentioned
+      // in the WalletConnect documentation,
+      // But is necessary otherwise
+      // WalletConnect will connect to Ethereum mainnet
+      chainId: config.configVars.rpcNetwork.chainId,
+    });
       //  Enable session (triggers QR Code modal)
       await provider.enable();
+      const ethersProvider = new 
+    ethers.providers.Web3Provider(provider);
 
       if (provider) {
         window.web3 = new Web3(provider);
@@ -156,7 +168,7 @@ function App() {
           console.log("(accounts[0], 2)", (accounts))
 
           setAccount(accounts[0])
-          /*setConnectWallet(accounts[0]);*/
+          setConnectWallet(accounts[0]);
           accountAd = accounts[0];
           getData();
         switch (netId) {
@@ -223,7 +235,7 @@ function App() {
             {show ?
               <div >
                 {showmeta && <button onClick={loadWeb3} className="btn mt-3  mt-md-0 text-truncate mar border border-left-4 btn-light fw-bolder btnWidth   p-2 fs-5">{account}</button>}
-                {/*showwallet && <button onClick={walletconnect} className="btn  mt-3  mt-md-0 marginLeft1  text-truncate btn-light fw-bolder btnWidth   p-2 fs-5">{connectWallet}</button>*/}
+                {showwallet && <button onClick={walletconnect} className="btn  mt-3  mt-md-0 marginLeft1  text-truncate btn-light fw-bolder btnWidth   p-2 fs-5">{connectWallet}</button>}
               </div>
               :
               <div>
