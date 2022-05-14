@@ -12,7 +12,7 @@ import { ethers } from "ethers";
 
 
 function App() {
-  const [account, setAccount] = useState("Connect")
+  const [account, setAccount] = useState("Meta/Trust")
   const [connectWallet, setConnectWallet] = useState("WalletConnect")
   const [claimrewards, setClaimRewards] = useState('0')
   const [showrewards, setShowRewards] = useState('0')
