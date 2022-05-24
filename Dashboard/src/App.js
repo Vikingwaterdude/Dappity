@@ -5,10 +5,11 @@ import Web3 from 'web3';
 import ScareCRO_ico from './Images/ScareCRO_ico.png'
 import ScareCRO_side from './Images/ScareCRO_side.png'
 import contractAbi, {contractAddress} from './contractabi'
+import holdingAbi, {personalAddress} from './HoldingABI'
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import * as config from "./config.js";
 import { ethers } from "ethers";
-
+import Axios from "axios";
 
 
 function App() {
@@ -20,11 +21,21 @@ function App() {
   const [show, setShow] = useState()
   const [showmeta, setShowMeta] = useState(true);
   const [showwallet, setShowWallet] = useState(true);
+  const [showscro, setshowScro] = useState("0");
+  const [ price, setPrice] = useState("")
+  const getPrice = () => {
+      Axios.get("https://api.dexscreener.io/latest/dex/tokens/0xd6CDd609aE911FD35F5e13e76242eA33902500d0").then(
+        (response) => {
+          console.log(response)
+          setPrice(response.data.pairs[0].priceUsd * showscro);
+        }
+      );
+    };
+  
   console.log(account);
   let contractabi = contractAbi;
+  let holdingabi = holdingAbi;
   let accountAd;
-
-
 
  /* eslint-disable no-unused-vars */
   const loadWeb3 = async () => {
@@ -81,6 +92,7 @@ function App() {
       const web3 = window.web3;
       // const web3 = new Web3('https://bsc-dataseed.binance.org/');
       let contract = new web3.eth.Contract(contractabi, contractAddress);
+      let contract1 = new web3.eth.Contract(holdingabi, personalAddress);
       // console.log("data", web3);
       // claimRewards
 
@@ -93,15 +105,21 @@ function App() {
       //setShowRewards(web3.utils.fromWei(showRewards))
      
       let balanceof = await contract.methods.totalDistributed().call();
+
+      let showscro = await contract1.methods.balanceOf(accountAd).call();
+
       // setClaimRewards(web3.utils.fromWei(claimRewards));
       setBalance(balanceof / 10**18);
       setShowRewards(showRewards / 10**18);
       setClaimRewards(claimRewards[2] / 10**18);
+      setshowScro(showscro / 10**9);
+
     } catch (e) {
       console.log("data", e);
       // avoid mask music love history produce print antenna jacket need glad wait
     }
   }
+  
   
   async function voteForCanidate2() {
     try {
@@ -262,6 +280,11 @@ function App() {
                     <h2 className="text-truncate marginLeft fw-bold">{showrewards}</h2>
                   </div>
                   <div className="d-flex flex-column justify-content-center mt-4">
+                    <h1 className=' fw-bolder'>SCRO Balance</h1>
+                    <h2 className="text-truncate marginLeft fw-bold">{showscro}</h2>
+                  <div className="d-flex flex-column justify-content-center mt-4">
+                  </div>
+                  
                     
                     {/* <h2 className="text-truncate marginLeft fw-bold">{showrewards}</h2> */}
                   </div>
@@ -275,10 +298,19 @@ function App() {
                   </div>
                 </div>
               </div> */}
-              { <div class="card  mt-4 mt-md-4">
+              { <div class="card  mt-5 mt-md-4">
                 <div class="card-body text-center">
-                  <div className="d-flex flex-column justify-content-center mt-4">
+                  <div className="d-flex flex-column justify-content-center mt-1">
                     <button className=' fw-bolder btn btn-light p-2 fs-4' onClick={voteForCanidate2}>Claim rewards</button>
+                  </div>
+                </div>
+              </div> }
+              { <div class="card  mt-4 mt-md-6">
+                <div class="card-body text-center">
+                  <div className="d-flex flex-column justify-content-center mt-6">
+                    <button className=' fw-bolder btn btn-light p-2 fs-4' onClick={getPrice}>USD estimate</button>
+                    <h1>${price}</h1>
+                    <h2>estimates do not account for taxes, price impact or DEX fees</h2>
                   </div>
                 </div>
               </div> }
