@@ -308,7 +308,7 @@ function App() {
               { <div class="card  mt-4 mt-md-6">
                 <div class="card-body text-center">
                   <div className="d-flex flex-column justify-content-center mt-6">
-                    <button className=' fw-bolder btn btn-light p-2 fs-4' onClick={getPrice}>SCRO/USD estimate</button>
+                    <button className=' fw-bolder btn btn-light p-2 fs-4' onClick={getPrice}>Click for SCRO/USD estimate</button>
                     <h1>${price}</h1>
                     <h2>estimates do not account for taxes, price impact or DEX fees</h2>
                   </div>
